@@ -1,0 +1,22 @@
+The NCLT, Noran Custom Language Translator, is a program that
+can read a langdefines file to translate code back and forth.
+
+The repository comes with a langdefines for my own language,
+NRSL.
+
+When you run the program you need to specify the langdefines file,
+which uses the old_new syntax, the code, an output file, and a 
+magichar. The magichar is used for sensitive strings, which are
+things you do not want translated. You put it in between two magichars.
+
+The program will translate according to langdefines and nothing else.
+For instance, if you set "||_or" in the langdefines and wrote "tore"
+it would translate into "t||e", so you should put everything of the 
+sort in between two magichars. I use "$" as my magichar.
+
+CHANGELOG
+1 - The proejct works.
+
+PLANS
+I want to add some more features for langdefine parsing, like
+in-file comment and newline handling.
