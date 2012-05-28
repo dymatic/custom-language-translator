@@ -16,6 +16,7 @@ sort in between two magichars. I use "$" as my magichar.
 
 CHANGELOG
 1 - The proejct works.
+2 - Upon request I added non-interactive mode. Call it with [program] path_to_langdefines path_to_code path_to_output magichar
 
 PLANS
 I want to add some more features for langdefine parsing, like
