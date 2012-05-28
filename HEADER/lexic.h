@@ -132,7 +132,7 @@ void compile(string fileName,int lines,string toWriteTo,string magichar){
     {
 		for(int secInd=0; secInd<members; secInd++)//Performs replacement operations
 		{
-		    splitstr(line[index],magichar); // splitst removes protected strings from lines[index] IF they exist.
+		    splitstr(line[index],magichar); // splitstr removes protected strings from lines[index] IF they exist.
 
 		    if(fromStrings[secInd]!="/++10x"&&toStrings[secInd]!="/++10x"){
 			replaceAll(line[index],fromStrings[secInd],toStrings[secInd]);
