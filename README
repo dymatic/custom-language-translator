@@ -14,9 +14,12 @@ For instance, if you set "||_or" in the langdefines and wrote "tore"
 it would translate into "t||e", so you should put everything of the 
 sort in between two magichars. I use "$" as my magichar.
 
+There are serveral new features present in version 2. The langdefines
+is commentable with TWO $ characters. Not using two will cause the 
+program to crash. Unfortunately, this means that you cannot use "$"
+in either the original or the product (sorry Bash scripters!)
 CHANGELOG
 1 - The proejct works.
-
+2 - Comments, sanitization, and two running modes.
 PLANS
-I want to add some more features for langdefine parsing, like
-in-file comment and newline handling.
+I want to add some newline handling to the langdefines.
