@@ -20,6 +20,11 @@ program to crash. Unfortunately, this means that you cannot use "$"
 in either the original or the product (sorry Bash scripters!)
 CHANGELOG
 1 - The proejct works.
+<<<<<<< HEAD
 2 - Comments, sanitization, and two running modes.
+=======
+2 - Upon request I added non-interactive mode. Call it with [program] path_to_langdefines path_to_code path_to_output magichar
+
+>>>>>>> 48bea2ae521ac4aaddca2ba5d6811b4df2d980d3
 PLANS
 I want to add some newline handling to the langdefines.
