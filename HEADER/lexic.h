@@ -16,8 +16,9 @@ int members=0;                     //  The number of members
 *This prevents the replacing of smaller words in
 *larger ones.
 *@param filepath - The path to the file
+*@param ltor - True (1) if the largest goes first, false (0) otherwise.
 */
-void orderFile(string filepath)
+void orderFile(string filepath, bool ltor)
 {
     ifstream file(filepath.c_str());
     int nlines=linec(filepath);
@@ -29,21 +30,37 @@ void orderFile(string filepath)
 
     for(int index=0; index<nlines-1; index++) //Iterate through positions
     {
-        while(lines[index].length()<lines[index+1].length())
+        if(ltor)
         {
-            string buffer;//Loop executes while a string below it needs replacing.
-            buffer=lines[index];
+            while(lines[index].length()<lines[index+1].length())
+            {
+                string buffer;//Loop executes while a string below it needs replacing.
+                if(lines[index].find("$")&&lines[index].find("@")==-1)
+                    splitstr(lines[index],"$");
+                buffer=lines[index];
 
-            lines[index]=lines[index+1];
-            lines[index+1]=buffer;
-            cout << "Let's see something."<<endl;
-            index--;
+                lines[index]=lines[index+1];
+                lines[index+1]=buffer;
+                index--;
+            }
         }
-    }
+        else
+        {
+            while(lines[index].length()>lines[index+1].length())
+            {
+                string buffer;//Loop executes while a string below it needs replacing.
+                buffer=lines[index];
+
+                lines[index]=lines[index+1];
+                lines[index+1]=buffer;
+                index--;
+            }//End while for backwards
+        }//End else that determines whether or not to do it forwards or backwards.
+    }//End main for
     file.close();
     ofstream writer(filepath.c_str());
     for(int index=0; index<nlines; index++)
-        writer<<lines[index]<<endl;//Write the ordered awway
+        writer<<lines[index]<<endl;//Write the ordered array
     writer.close();
 }
 /**
@@ -64,27 +81,32 @@ void loadLanguage(string filename,int lines)
     for(int index=0; index<10000; index++)
     {
         getline(file,buffer);
-        if(buffer.find("$")!=-1)
-            splitstr(buffer,"$");
-
+        if(buffer.find("$")!=-1&&buffer.find("@")==-1) //String is split if let_symbol is here
+        {
+            splitstr(buffer,"$");//Replace in between the comments
+        }
+        else if(buffer.find("@")!=-1) //Let symbol is deleted
+        {
+            buffer.replace(buffer.find("@"),buffer.find("@"),"");
+        }
         if(buffer.find("_")!=-1)
         {
-            toStrings[index]=buffer.substr(0,buffer.find("_"));
+            toStrings[index]=buffer.substr(0,buffer.find("_"));//Tostrings is first half of underscore
 
-            fromStrings[index]=buffer.substr(buffer.find("_")+1,buffer.length());
+            fromStrings[index]=buffer.substr(buffer.find("_")+1,buffer.length());//From is last half of underscore
+
         }
         else
         {
-            until=10000-index;//Second bug
+            until=10000-index;//How many null characters to write
             break;
         }
-
-        for(int index=10000-until; index<10000; index++)
-        {
-            //\++10x is used to indicate a line not being used.
-            toStrings[index]="/++10x";
-            fromStrings[index]="/++10x";
-        }
+    }
+    for(int index=10000-until; index<10000; index++)
+    {
+        //\++10x is used to indicate a line not being used.
+        toStrings[index]="/++10x";
+        fromStrings[index]="/++10x";
     }
 }
 /**
@@ -96,12 +118,12 @@ int linec(string filename)
 {
     ifstream file(filename.c_str());
     int lines=0;
-    string buffer;
+    string *buffer=new string;
 
-    for(; getline(file,buffer);)
-    {
+    for(; getline(file,*buffer);)
         lines++;
-    }
+
+    file.close();
     return lines;
 }
 /**
@@ -134,27 +156,22 @@ void splitstr(string &toSplit, string magichar)
 {
     if(toSplit.find(magichar)!=-1)
     {
-
         stringstream buffer;
 
         string copy=toSplit;
-        string cnholder="";
-        string nope="";
+        string nope="";//replaceall needs a reference.
 
+        if(toSplit.find(magichar)!=-1)//Put the text before first magichar in buffer
+            buffer<<copy.substr(0,toSplit.find(magichar));
 
-        if(toSplit.find(magichar)!=-1)
-            buffer<<copy.substr(0,toSplit.find(magichar));//Before first magichar
-
-        cnholder=buffer.str();
-
-        if(copy.find(magichar)!=-1)
+        if(copy.find(magichar)!=-1)//Make copy equal to the whole string minues the part up to the first magichar
             copy=copy.substr(toSplit.find(magichar)+1,toSplit.length());
 
-        if(copy.find(magichar)!=-1)
-            buffer<<copy.substr(copy.find(magichar)+1,copy.length());//Substring of one more than the next magichar and the length.
+        if(copy.find(magichar)!=-1)//Put the position of the magichar+1 in the buffer.
+            buffer<<copy.substr(copy.find(magichar)+1,copy.length());
 
         toSplit=buffer.str();
-    }
+    }//End if
 }
 /**
  * Creates a file containing the old text as defined by
@@ -188,8 +205,7 @@ void compile(string fileName,int lines,string toWriteTo,string magichar)
             {
                 replaceAll(line[index],fromStrings[secInd],toStrings[secInd]);
             }
-
-        }
+        }//END for replacements
         cout << line[index]<<endl;
         reader.close();
     }

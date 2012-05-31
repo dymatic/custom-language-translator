@@ -1,0 +1,71 @@
+void_nothing$ TYPE SET$
+double_deci
+int_number
+float_point
+string_text
+std::string_text
+short_little
+bool_bit
+class_object$ DATA STRUCTURE SET$
+struct_item
+union_jitem
+if_hypoth$ CONDITIONALS AND LOOPS$
+?_cond
+<=_lethen
+>=_gethen
+==_equals
+<_lthen
+>_gthen
+for_itl
+do_loop
+while_hypothl
+/**_~~!!$ COMMENTS$
+/*_~!!
+*/_!~
+//_~!
+@author_:::auth
+@param_:::pmet
+@version_:::rev
+@return_:::mail
+return_mail$VARIOUS KEYWORDS$
+throw_toss
+new_clean
+catch_grab
+using_use
+namespace_modland
+#include_import
+#ifdef_hypothdefi
+#ifndef_hypothnodefi
+|_bor$BITWISE$
+&_band
+~_bnot
+^_bxor
+<<_bshiftl
+>>_bshiftr
+=_is$ASSIGNMENT AND MATH$
+-=_subto
++=_addto
+*=_multo
+/=_divto
+%=_modto
+*_mult
+*_addr
++_add
+-_minus
+/_divby
+%_modby
+{_(*$SEMANTICS$
+}_*)
+*_addr
+[_\=
+]_=\
+main_program
+cout_say$COMMON LIBRARIES$
+cin_get
+<<_<--
+>>_-->
+rand_random
+ifstream_ifile
+ofstream_ofile
+ _then$CUSTOM$
+ _`

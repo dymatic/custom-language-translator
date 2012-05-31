@@ -16,15 +16,22 @@ sort in between two magichars. I use "$" as my magichar.
 
 There are serveral new features present in version 2. The langdefines
 is commentable with TWO $ characters. Not using two will cause the 
-program to crash. Unfortunately, this means that you cannot use "$"
-in either the original or the product (sorry Bash scripters!)
+program to crash. You can put just one for names and such, but you have
+to include the ALLOW character (@) to let it work. With the allow character,
+you can have any number of $'s you want.
+
+Do NOT put more than one set of magichars in anything you are splitstr'ing. This
+includes langdefines (without the allow character) and code.
+
 CHANGELOG
 1 - The proejct works.
-<<<<<<< HEAD
 2 - Comments, sanitization, and two running modes.
-=======
-2 - Upon request I added non-interactive mode. Call it with [program] path_to_langdefines path_to_code path_to_output magichar
+2.1 - Upon request I added non-interactive mode. Call it with [program] path_to_langdefines path_to_code path_to_output magichar
+2.2 - Lots of work wit the langdefines. Some more syntax to understand.
+Comments can be used in the langdefines with two "$"s. Now, there is an
+allow character that will make comments matter.
 
->>>>>>> 48bea2ae521ac4aaddca2ba5d6811b4df2d980d3
 PLANS
-I want to add some newline handling to the langdefines.
+I want to add some newline handling to the langdefines. I also want
+to add langdefines titles that go in between =='s and have an allow
+character. This is easily accomplished.

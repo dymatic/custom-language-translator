@@ -2,9 +2,9 @@
  * Noran Scripting Language.cxx
  *Licensed under the NRPL
  *
- *NOTE: EVERY SINGLE WORD meeting the langdefines WILL be changed
- *by functionallity. This is not a bug. Be safe when writing langdefines.
- *Be especially safe with ints.
+ *See EDITORS for author information.
+ *By standard, append the name of langdefines
+ *files with .ldf if your operating system allows it.
  */
 
 
@@ -46,12 +46,12 @@ int main(int argc, char**argv)
         cin  >> argv2[3];
         cout << endl;
 
-        cout << "Would you like the langdefines automatically ordered? y/m "<<endl<<"$ ";
+        cout << "Would you like the langdefines automatically ordered? y/n "<<endl<<"$ ";
         cin  >> argv2[4];
         cout << endl;
     }
     if(argv2[4].find("y")!=-1)
-        orderFile(argv2[0]);
+        orderFile(argv2[0],true);
 
     loadLanguage(argv2[0],linec(argv2[0]));
     compile(argv2[1],linec(argv2[1]),argv2[2],argv2[3]);
