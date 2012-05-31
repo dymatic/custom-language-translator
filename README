@@ -29,7 +29,7 @@ CHANGELOG
 2.1 - Upon request I added non-interactive mode. Call it with [program] path_to_langdefines path_to_code path_to_output magichar
 2.2 - Lots of work wit the langdefines. Some more syntax to understand.
 Comments can be used in the langdefines with two "$"s. Now, there is an
-allow character that will make comments matter.
+allow character that will make comments not matter.
 
 PLANS
 I want to add some newline handling to the langdefines. I also want
