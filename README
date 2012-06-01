@@ -20,8 +20,11 @@ program to crash. You can put just one for names and such, but you have
 to include the ALLOW character (@) to let it work. With the allow character,
 you can have any number of $'s you want.
 
-Do NOT put more than one set of magichars in anything you are splitstr'ing. This
-includes langdefines (without the allow character) and code.
+Do NOT put more than one set of magichars in anything you are splitstr'ing.
+This includes langdefines (without the allow character) and code.
+
+Iterative Compiling (iCompile) and Noran Makefile capabilities can only be
+ used during interactive (no-arg) mode.
 
 CHANGELOG
 1 - The proejct works.
@@ -30,6 +33,8 @@ CHANGELOG
 2.2 - Lots of work wit the langdefines. Some more syntax to understand.
 Comments can be used in the langdefines with two "$"s. Now, there is an
 allow character that will make comments not matter.
+2.3 - A new compiling mode for interactive mode called iCompile that uses
+a Noran Makefile (.nmf)
 
 PLANS
 I want to add some newline handling to the langdefines. I also want

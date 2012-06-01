@@ -186,10 +186,9 @@ void splitstr(string &toSplit, string magichar)
  */
 void compile(string fileName,int lines,string toWriteTo,string magichar)
 {
-
     string line[lines];
     ifstream reader(fileName.c_str());
-
+    cout << lines<<endl;
     for(int index=0; index<lines; index++)
     {
         getline(reader, line[index]);
@@ -214,6 +213,33 @@ void compile(string fileName,int lines,string toWriteTo,string magichar)
     for(int index=0; index<lines; index++)//Iterate through the changed lines and write them to a file.
     {
         writer << line[index]<<endl;
+        cout << "Wrote file"<<endl;
     }
     writer.close();
 }
+/**
+*Compiles a set of files in a Noran Make File.
+*The syntax for a Noran Make File is infile_outfile_magichar
+*@param nmfPath - The path to the Noran Make File
+*/
+void iCompile(string nmfPath)
+{
+    ifstream nmf(nmfPath.c_str());
+    int nmflength = linec(nmfPath);
+
+    for(int index=0; index<nmflength; index++)
+    {
+        string buffer;
+        string inFile, outFile, magichar;
+
+        getline(nmf,buffer);
+        //in_out_mag
+        inFile=buffer.substr(0,buffer.find("_"));
+        buffer=buffer.substr(buffer.find("_")+1,buffer.length());
+        //out_mag
+        outFile=buffer.substr(0,buffer.find("_"));
+        buffer=buffer.substr(buffer.find("_")+1,buffer.length());
+        //mag
+        magichar=buffer;
+        compile(inFile,linec(inFile.c_str()),outFile,magichar);
+}}
