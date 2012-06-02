@@ -188,37 +188,35 @@ void compile(string fileName,int lines,string toWriteTo,string magichar)
 {
     string line[lines];
     ifstream reader(fileName.c_str());
+    ofstream writer(toWriteTo.c_str());
     cout << lines<<endl;
-    for(int index=0; index<lines; index++)
-    {
-        getline(reader, line[index]);
-    }
+
 
     for(int index=0; index<lines; index++) // Loops through each line
     {
+        getline(reader, line[index]);
         for(int secInd=0; secInd<members; secInd++)//Performs replacement operations
         {
             splitstr(line[index],magichar); // splitstr removes protected strings from lines[index] IF they exist.
 
-            if(fromStrings[secInd]!="/++10x"&&toStrings[secInd]!="/++10x")
+            if(fromStrings[secInd]!="/++10x"&&toStrings[secInd]!="/++10x")//NULL string to ensure quality.
             {
                 replaceAll(line[index],fromStrings[secInd],toStrings[secInd]);
             }
         }//END for replacements
         cout << line[index]<<endl;
-        reader.close();
-    }
-    ofstream writer(toWriteTo.c_str());
 
-    for(int index=0; index<lines; index++)//Iterate through the changed lines and write them to a file.
-    {
+
+
         writer << line[index]<<endl;
-        cout << "Wrote file"<<endl;
+
     }
     writer.close();
+    reader.close();
 }
 /**
 *Compiles a set of files in a Noran Make File.
+*iCompile stands for Iterative Compilation
 *The syntax for a Noran Make File is infile_outfile_magichar
 *@param nmfPath - The path to the Noran Make File
 */
@@ -242,4 +240,5 @@ void iCompile(string nmfPath)
         //mag
         magichar=buffer;
         compile(inFile,linec(inFile.c_str()),outFile,magichar);
-}}
+    }
+}
