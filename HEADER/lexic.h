@@ -8,13 +8,15 @@ using namespace std;
 string *fromStrings=new string[10000];//C++ members
 string *toStrings=new string[10000]; // Custom language members
 void splitstr(string &c,string s);
+void replaceAll(std::string& str,  std::string& from,  std::string& to);
 int linec(string);
 int members=0;                     //  The number of members
 
 /**
 *Orders the langdefines by line length.
 *This prevents the replacing of smaller words in
-*larger ones.
+*larger ones. This is an exact copy of the function in NSL,
+*with the addition of title checking.
 *@param filepath - The path to the file
 *@param ltor - True (1) if the largest goes first, false (0) otherwise.
 */
@@ -22,7 +24,7 @@ void orderFile(string filepath, bool ltor)
 {
     ifstream file(filepath.c_str());
     int nlines=linec(filepath);
-
+    ofstream writer(filepath.c_str());
     string lines[nlines];//Contains all of the lines
 
     for(int index=0; index<nlines; index++) //Make container
@@ -32,35 +34,48 @@ void orderFile(string filepath, bool ltor)
     {
         if(ltor)
         {
+            if(lines[index].find("$")!=-1&&lines[index].find("@")==-1)
+                    splitstr(lines[index],"$");//Cuts the comment if the allow character is not present.
+
             while(lines[index].length()<lines[index+1].length())
-            {
-                string buffer;//Loop executes while a string below it needs replacing.
-                if(lines[index].find("$")&&lines[index].find("@")==-1)
-                    splitstr(lines[index],"$");
-                buffer=lines[index];
+            {//Checks the line before it, changes them, and subtracts one from index.
+                bool title=false;//Whether or not it is a title line (===)
+                string buffer=lines[index];
+
+                if(lines[index].find("===")!=-1)
+                    title=true;
 
                 lines[index]=lines[index+1];
                 lines[index+1]=buffer;
                 index--;
+
+                if(title&&index==0)
+                    break;//Will not enroach on the title, despite size.
             }
         }
         else
         {
             while(lines[index].length()>lines[index+1].length())
             {
-                string buffer;//Loop executes while a string below it needs replacing.
-                buffer=lines[index];
+               //Checks the line before it, changes them, and subtracts one from index.
+                bool title=false;//Whether or not it is a title line (===)
+                string buffer=lines[index];
+
+                if(lines[index].find("===")!=-1)
+                    title=true;
 
                 lines[index]=lines[index+1];
                 lines[index+1]=buffer;
                 index--;
+
+                if(title&&index==0)
+                    break;//Will not enroach on the title, despite size.
             }//End while for backwards
         }//End else that determines whether or not to do it forwards or backwards.
-    }//End main for
-    file.close();
-    ofstream writer(filepath.c_str());
-    for(int index=0; index<nlines; index++)
         writer<<lines[index]<<endl;//Write the ordered array
+    }//End main for
+
+    file.close();
     writer.close();
 }
 /**
@@ -74,6 +89,8 @@ void loadLanguage(string filename,int lines)
 {
     string buffer; //Used for parsing individual lines
     members=lines;// How many entries the langdefines has
+     string title="===";//Used for language titles on the first line of a langdefines
+    string replaceWith="Language Title: ";
     int until=0; /*Until is used to determine how many NO_USE characters to use.
                     NO_USE characters show an unwritten line.*/
 
@@ -89,6 +106,14 @@ void loadLanguage(string filename,int lines)
         {
             buffer.replace(buffer.find("@"),buffer.find("@"),"");
         }
+        if(buffer.find("===")!=-1&&index==0)
+        {
+            replaceAll(buffer,title,replaceWith);
+            cout << buffer<<endl;
+            index--;
+            continue;
+        }
+        //This marks the end of all of the file syntax and the beginning of the real language scraping.
         if(buffer.find("_")!=-1)
         {
             toStrings[index]=buffer.substr(0,buffer.find("_"));//Tostrings is first half of underscore
@@ -139,6 +164,7 @@ void replaceAll(std::string& str,  std::string& from,  std::string& to)
     {
         str.replace(start_pos, from.length(), to);
         start_pos += to.length();
+
     }
 }
 /**
@@ -203,10 +229,8 @@ void compile(string fileName,int lines,string toWriteTo,string magichar)
             {
                 replaceAll(line[index],fromStrings[secInd],toStrings[secInd]);
             }
+
         }//END for replacements
-        cout << line[index]<<endl;
-
-
 
         writer << line[index]<<endl;
 

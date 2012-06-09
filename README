@@ -26,6 +26,11 @@ This includes langdefines (without the allow character) and code.
 Iterative Compiling (iCompile) and Noran Makefile capabilities can only be
  used during interactive (no-arg) mode.
 
+After a long debugging session (without a debugger) I have figured out why 
+my language titles were not working. They are now in use. To add a language
+title to a langdefines, write "===[your title here, no brackets needed]" on the first line.
+Writing on the first line is not required if you are ordering the file.
+
 CHANGELOG
 1 - The proejct works.
 2 - Comments, sanitization, and two running modes.
@@ -35,8 +40,8 @@ Comments can be used in the langdefines with two "$"s. Now, there is an
 allow character that will make comments not matter.
 2.3 - A new compiling mode for interactive mode called iCompile that uses
 a Noran Makefile (.nmf)
+2.4 - Added language titles. Syntax is "===Title" on the first line of a langdefines.
+Also, made orderFile slightly better.
 
 PLANS
-I want to add some newline handling to the langdefines. I also want
-to add langdefines titles that go in between =='s and have an allow
-character. This is easily accomplished.
+I want to add some newline handling to the langdefines.
