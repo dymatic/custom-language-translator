@@ -28,8 +28,7 @@ Iterative Compiling (iCompile) and Noran Makefile capabilities can only be
 
 After a long debugging session (without a debugger) I have figured out why 
 my language titles were not working. They are now in use. To add a language
-title to a langdefines, write "===[your title here, no brackets needed]" on the first line.
-Writing on the first line is not required if you are ordering the file.
+title to a langdefines, write "===[your title here, no brackets or quotes needed]" on the first line.
 
 CHANGELOG
 1 - The proejct works.
